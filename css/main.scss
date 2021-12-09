@@ -1,0 +1,378 @@
+/* fichier main.scss
+
+					
+*/
+
+@import 'reset';
+@import 'variables'; 
+
+@mixin shadow($side){
+	content: '';
+	display: block;
+	width: 35px;
+	height: 38px;
+	background: url(../images/shadow.png);
+	position: absolute;
+	bottom: -16px;
+	
+	#{$side} : 100%;
+
+	@if $side == 'left'{
+		transform: scaleX(-1);
+	}
+}
+@mixin button($type, $backColor : $blue, $txtColor : $white100){
+	text-decoration: none;
+	text-transform: uppercase;
+	border: none;
+	font-size: 1.2rem;
+	font-weight: bold;
+	letter-spacing: 3px;
+	padding: 1rem 3rem;
+	display: inline-block;
+	border-radius: 5px;
+	background: transparent;
+	margin-right: 1rem;
+	color: $txtColor;
+
+	@if $type == 'full'{
+		background: $backColor;
+	}
+	@if $type == 'border'{
+		box-shadow: inset 0 0 2px $darkgrey;
+	}
+}
+@mixin title{
+	color: $blue;
+	font-weight: bold;
+	margin-bottom: 1rem;
+	font-size: 1.2rem;
+	letter-spacing: 1px;
+}
+@mixin iconslist($c : $darkgrey){
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: center;
+	li{
+		width: 40%;
+		margin-right: 4rem;
+		border-bottom: 1px solid $c;
+		padding: 2rem 1rem 2rem 4rem;
+		position: relative;
+		&:nth-child(even){
+			margin-right: 0;
+		}
+		&:nth-last-of-type(1),
+		&:nth-last-of-type(2){
+		border-bottom: none;
+		}
+		i{
+			position: absolute;
+			top: 1.5rem;
+			left: 0;
+			display: flex;
+			width: 3rem;
+			height: 3rem;
+			background: $icon;
+			color: $white100;
+			justify-content: center;
+			align-items: center;
+			border-radius: 50%;
+		}
+		h1{
+			@include title;
+		}
+		p{
+			margin-bottom: 0;
+		}
+		a{
+			color:$white100;
+		}
+	}
+}
+@mixin nav($c : $white25){
+	border: 1px solid $c;
+	padding: 20px;
+
+	border-radius: 5px;
+	a{
+		margin-right: 20px;
+
+		&:last-child{
+			margin-right: 0;
+		}
+	}
+}
+html{
+	font-family: 'SourceSans';
+	font-size: 15px;
+	body{
+		line-height: 1.5;
+	}
+	a{
+		text-decoration: none;
+		color: inherit;
+	}
+	a.button,
+	button{
+		&.full{
+			@include button('full');
+		}
+		&.line{
+			@include button('border');
+		}
+		&:last-child{
+			margin-right: 0;
+		}
+	}
+	
+	.zone{
+		position: relative;
+		& > h1:first-child{
+			background: blue;
+			width: 300px;
+			position: absolute;
+			top: -40px;
+			left: calc(50% - 150px);
+			text-transform: uppercase;
+			letter-spacing: 2px;
+			font-weight: bold;
+			text-align: center;
+			padding: 20px;
+
+			&::before{
+				@include shadow('left');
+			}
+			&::after{
+				@include shadow('right');
+			}
+		}
+		.wrapper{
+			width: 80%;
+			max-width: 1200px;
+			margin: auto;
+			padding: 70px 0;
+		}
+		h2, h3, p, figure, ul{
+			margin-bottom: 30px;
+			&:last-child{
+				margin-bottom: 0;
+			}
+		}
+		strong{
+			font-weight: bold;
+		}
+		p a{
+			text-decoration: underline;
+		}
+		.baseline{
+			font-size: 1.2rem;
+		}
+		.headline{
+			border: 1px solid $white25;
+			font-size: 1.8rem;
+			font-weight: bold;
+			border-radius: 10px;
+			padding: 40px 70px;
+		}
+		.focus{
+			font-size: 1.7rem;
+			font-weight: bold;
+			color: $marine;
+		}
+	}
+}
+header{
+	background: url(../images/banner.jpg) no-repeat 50% 50% / cover;
+	min-height: 80vh;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	color : $white25;
+	text-transform: uppercase;
+	position: relative;
+	h1{
+		color: $white100;
+		font-size: 1.7rem;
+		font-weight: bold;
+		letter-spacing: 8px;
+		margin-bottom: 20px;
+	}
+	h2{
+		letter-spacing: 2px;
+		font-weight: 300;
+	}
+	nav{
+		position: absolute;
+		top: 30px;
+		/* pour se baser sur la moitié
+		de la largeur de la page*/
+		left: 50%;
+
+		/* pour deplacer la nav de la moitié
+		de sa largeur (pour que le milieu soit aligné) */
+		transform: translateX(-50%);
+
+		@include nav;
+	}
+}
+.intro{
+	background: #3c78bc url(../images/overlay.png) ;
+	color: $lightgrey;
+	text-align: center;
+
+	.button.full{
+		@include button('full', $marine);
+	}
+}
+.details{
+	background: $white100;
+	.wrapper > h2,
+	.wrapper > h3,
+	.wrapper > p{
+		text-align: center;
+	}
+	ul{
+		@include iconslist;
+	}
+	.button.line{
+		@include button('border', '', $darkgrey);
+	}
+}
+.endorsements{
+	background: $lightgrey;
+	color: $icon;
+
+	.wrapper{
+		display:flex;
+		justify-content: space-between;
+		article{
+			width: 27%;
+			text-align: center;
+			display: flex;
+			flex-direction: column;
+
+			h1{
+				@include title;
+			}
+			figure{
+				order: -1;
+				border: 10px solid $white100;
+			}
+		}
+	}
+}
+footer.zone{
+	background: $marine;
+	color: $white25;
+	.wrapper{
+		/*display: flex;
+		flex-direction: column;
+		align-items: center;*/
+		.baseline{
+			text-align: center;
+			font-size:1.5rem;
+
+		}
+		.focus{
+			color: $white100;
+			text-align: center;
+			font-size:2rem;
+		}
+		article{
+			width: 100%;
+			display: flex;
+			justify-content: space-between;
+			border-top: 1px solid $white05;
+			border-bottom: 1px solid $white05;
+			padding: 2rem;
+			margin-bottom: 30px;
+			form{
+				width: 45%;
+				padding-top: 2rem;
+				p:first-child{
+					display: flex;
+				justify-content: space-between;
+				}
+				input, textarea{
+					font-family: inherit;
+					background: $darkgrey;
+					margin: 0;
+					padding: 1rem;
+					border: none;
+					border-radius: 5px;
+					&::placeholder{
+						color: #000;
+						font-style: italic;
+					}
+				}
+				input{
+					width: 49%;
+				}
+				textarea{
+					width: 100%;
+					resize: vertical;
+				}
+			}
+			ul{
+				width: 45%;
+				@include iconslist($white05);
+			}
+		}
+
+		& > ul{
+			@include nav($white05);
+			width: fit-content;
+			margin:auto;
+			display: flex ;
+			li{
+				border-right: 1px solid $white05;
+				padding: 0 1rem;
+				&:last-child{
+					border-right: none;
+				}
+				a{
+					text-decoration: underline;
+				}
+			}
+		}
+	}
+}
+
+ 
+@media screen and (max-width: 1200px){
+	footer.zone{
+		article{
+			display: flex;
+			flex-direction: column;
+			form{
+				min-width: 100%;
+			}
+			ul{
+				min-width: 100%;
+			}
+		}
+	}
+}
+@media screen and (max-width: 1000px){
+ 
+    .details{
+            ul{
+				display: flex;
+				flex-direction:column;
+				li{
+					width: 100%; }
+			}
+    }
+	.endorsements{
+		div.wrapper{
+			display: flex;
+			flex-direction:column;
+			article{
+				width:100%;
+			}
+		}
+
+	}
+}
